@@ -13,6 +13,7 @@
 #include <common/core.hpp>
 #include <common/malloc.hpp>
 #include <common/md5calc.hpp>
+#include <common/kdfcalc.hpp>
 #include <common/mmo.hpp>
 #include <common/msg_conf.hpp>
 #include <common/random.hpp>
@@ -439,8 +440,10 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
  * @return true if matching else false
  */
 bool login_check_password( struct login_session_data& sd, struct mmo_account& acc ){
+	// passwdenc == 0 is plaintext
 	if( sd.passwdenc == 0 ){
-		return 0 == strcmp( sd.passwd, acc.pass );
+		return 0 == kdf_verify( acc.pass, sd.passwd );
+		//return 0 == strcmp( sd.passwd, acc.pass );
 	}
 
 	// password mode set to 1 -> md5(md5key, refpass) enable with <passwordencrypt></passwordencrypt>

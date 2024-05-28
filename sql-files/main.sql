@@ -291,7 +291,7 @@ CREATE TABLE IF NOT EXISTS `char` (
   KEY `party_id` (`party_id`),
   KEY `guild_id` (`guild_id`),
   KEY `online` (`online`)
-) ENGINE=MyISAM AUTO_INCREMENT=150000; 
+) ENGINE=MyISAM AUTO_INCREMENT=150000;
 
 --
 -- Table structure for table `char_reg_num`
@@ -340,7 +340,7 @@ CREATE TABLE IF NOT EXISTS `charlog` (
   `hair_color` int(11) NOT NULL default '0',
   PRIMARY KEY (`id`),
   KEY `account_id` (`account_id`)
-) ENGINE=MyISAM; 
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `clan`
@@ -694,7 +694,7 @@ CREATE TABLE IF NOT EXISTS `hotkey` (
   PRIMARY KEY (`char_id`,`hotkey`)
 ) ENGINE=MyISAM;
 
--- 
+--
 -- Table structure for table `interlog`
 --
 
@@ -767,7 +767,7 @@ CREATE TABLE IF NOT EXISTS `ipbanlist` (
 CREATE TABLE IF NOT EXISTS `login` (
   `account_id` int(11) unsigned NOT NULL auto_increment,
   `userid` varchar(23) NOT NULL default '',
-  `user_pass` varchar(32) NOT NULL default '',
+  `user_pass` varchar(255) NOT NULL default '',
   `sex` enum('M','F','S') NOT NULL default 'M',
   `email` varchar(39) NOT NULL default '',
   `group_id` tinyint(3) NOT NULL default '0',
@@ -788,7 +788,7 @@ CREATE TABLE IF NOT EXISTS `login` (
   PRIMARY KEY  (`account_id`),
   KEY `name` (`userid`),
   UNIQUE KEY `web_auth_token_key` (`web_auth_token`)
-) ENGINE=MyISAM AUTO_INCREMENT=2000000; 
+) ENGINE=MyISAM AUTO_INCREMENT=2000000;
 
 -- added standard accounts for servers, VERY INSECURE!!!
 -- inserted into the table called login which is above

@@ -8,6 +8,7 @@
 
 #include <common/cli.hpp>
 #include <common/md5calc.hpp>
+#include <common/kdfcalc.hpp>
 #include <common/mmo.hpp> //cbasetype + NAME_LENGTH
 #include <common/showmsg.hpp> //show notice
 #include <common/strlib.hpp>
@@ -119,16 +120,19 @@ int cnslif_parse(const char* buf){
 				login_config_read(login_config.loginconf_name, false);
 			}
 		}
+
 		if( strcmpi("create",type) == 0 )
 		{
-			char username[NAME_LENGTH], password[NAME_LENGTH], md5password[32+1], sex; //23+1 plaintext 32+1 md5
+			//char username[NAME_LENGTH], password[NAME_LENGTH], md5password[32+1], sex; //23+1 plaintext 32+1 md5
+			char username[NAME_LENGTH], password[NAME_LENGTH], md5password[PASSWD_LENGTH], sex; //23+1 plaintext 32+1 md5
 			bool md5 = 0;
 			if( sscanf(command, "%23s %23s %c", username, password, &sex) < 3 || strnlen(username, sizeof(username)) < 4 || strnlen(password, sizeof(password)) < 1 ){
 				ShowWarning("Console: Invalid parameters for '%s'. Usage: %s <username> <password> <sex:F/M>\n", type, type);
 				return 0;
 			}
 			if( login_config.use_md5_passwds ){
-				MD5_String(password,md5password);
+				//MD5_String(password, md5password);
+				kdf_derive(password, md5password);
 				md5 = 1;
 			}
 			if( login_mmo_auth_new(username,(md5?md5password:password), TOUPPER(sex), "0.0.0.0") != -1 ){

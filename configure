@@ -7078,7 +7078,7 @@ Solaris* )
 	LIBS="$LIBS -lsocket -lnsl -ldl"
 	;;
 Linux* )
-	LIBS="$LIBS -ldl"
+	LIBS="$LIBS -ldl -lsodium"
 	;;
 FreeBSD*)
 	CPPFLAGS="$CPPFLAGS -D__FREEBSD__"
