@@ -343,10 +343,9 @@ static bool logclif_parse_reqauth_sso( int fd, login_session_data& sd ){
 	// Shinryo: For the time being, just use token as password.
 	safestrncpy( sd.passwd, p->token, token_length + 1 );
 
-	if( login_config.use_md5_passwds ){
-		//MD5_String( sd.passwd, sd.passwd );
-		kdf_derive( sd.passwd, sd.passwd );
-	}
+	//if( login_config.use_md5_passwds ){
+	//	//MD5_String( sd.passwd, sd.passwd );
+	//}
 
 	sd.passwdenc = 0;
 
@@ -410,10 +409,7 @@ static int logclif_parse_reqcharconnec(int fd, struct login_session_data *sd, ch
 
 		safestrncpy(sd->userid, RFIFOCP(fd,2), NAME_LENGTH);
 		safestrncpy(sd->passwd, RFIFOCP(fd,26), NAME_LENGTH);
-		if( login_config.use_md5_passwds ) {
-			//MD5_String(sd->passwd, sd->passwd);
-			kdf_derive(sd->passwd, sd->passwd);
-		}
+
 		sd->passwdenc = 0;
 		server_ip = ntohl(RFIFOL(fd,54));
 		server_port = ntohs(RFIFOW(fd,58));

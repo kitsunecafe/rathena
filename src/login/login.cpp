@@ -442,7 +442,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 bool login_check_password( struct login_session_data& sd, struct mmo_account& acc ){
 	// passwdenc == 0 is plaintext
 	if( sd.passwdenc == 0 ){
-		return 0 == kdf_verify( acc.pass, sd.passwd );
+		return 0 == kdf_verify( sd.passwd, acc.pass );
 		//return 0 == strcmp( sd.passwd, acc.pass );
 	}
 
